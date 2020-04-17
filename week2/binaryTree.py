@@ -12,12 +12,21 @@ class TreeNode:
        self.right = None
 
 class Fool:
-    def diameterOfBinaryTree(self, root: TreeNode):
-        if not root.left == None:
-            a = self.diameterOfBinaryTree(root.left)
-        if not root.left == None:
-            b = self.diameterOfBinaryTree(root.right)
-        return 0
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        a = self.diameterOfBinaryTree(root.left)
+        b = self.diameterOfBinaryTree(root.right)
+        l = self.maxDepth(root.left)
+        r = self.maxDepth(root.right)
+        return max(a, b, l + r + 2)
+
+    def maxDepth(self, node) -> int:
+        if not node:
+            return -1
+        return max(self.maxDepth(node.left), self.maxDepth(node.right)) + 1
+
+
 
 
 exampleTree = TreeNode(1)
@@ -27,12 +36,13 @@ exampleTree.left.left = TreeNode(4)
 exampleTree.left.right = TreeNode(5)
 
 
-print("\n\n")
-print(exampleTree.left.val)
 
 f = Fool()
 print(f.diameterOfBinaryTree(exampleTree))
 
+#  The max depth of a single leaf is zero.
+#  print(f.maxDepth(TreeNode(3)))
 
-
-
+#  the example tree given on leetcode has max depth equal to 3 as
+#  expected
+#  print(f.maxDepth(exampleTree))
